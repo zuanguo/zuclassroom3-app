@@ -1,0 +1,45 @@
+name: Build Windows Installer
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-windows:构建Windows:
+    runs-on: windows-latest运行于: windows-latest
+
+    steps:步骤:步骤:步骤:
+      - name: Checkout      - 名称: 检出
+        uses: actions/checkout@v4使用: actions/checkout@v4
+
+      - name: Setup Python      - 名称: 设置 Python
+        uses: actions/setup-python@v5使用: 使用: actions/setup-python@v5: actions/setup-python@v5uses: actions/setup-python@v5使用: 使用: actions/setup-python@v5: actions/setup-python@v5
+        with:
+          python-version: "3.11"python版本: "3.11"Python版本: "3.11"
+
+      - name: Install dependencies      - name: 安装依赖项 - name: 安装依赖项 - name: 安装依赖项
+        run运行运行运行运行运行运行运行运行运行运行: |
+          python -m pip install --upgrade pip
+          pip install PySide6 pyinstaller PyMuPDF
+
+      - name: Build EXE with PyInstaller      - name: 使用 PyInstaller 构建 EXE - 名称: 使用PyInstaller构建EXE      - name: 使用PyInstaller构建EXE - name: 使用PyInstaller构建EXE使用PyInstaller构建EXE - 名称: 使用PyInstaller构建EXE - 名称: 使用PyInstaller构建EXE
+        shell: cmd
+        run: |运行: |运行: |运行: |运行: |运行: |运行: |运行: |
+          if exist app.ico (
+            pyinstaller --noconfirm --clean --windowed --onefile --name ClassroomApp --collect-all fitz --version-file version_info.txt --icon=app.ico classroom_app.py
+          ) else (
+            pyinstaller --noconfirm --clean --windowed --onefile --name ClassroomApp --collect-all fitz --version-file version_info.txt classroom_app.py
+          )
+
+      - name: Install Inno Setup      - name: 安装Inno Setup - 名称:       - name: - 名称: 安装Inno Setup - 名称: 安装Inno Setup - 名称: 安装Inno Setup      - name: 安装Inno Setup - name: 安装Inno Setup
+        run运行运行运行运行运行运行运行运行运行运行: choco install innosetup -y运行: choco 安装 innosetup -y运行: choco install innosetup -y运行: choco 安装 innosetup -y
+
+      - name: Build Installer
+        shell: cmd
+        run: |运行: |运行: |运行: |运行: |运行: |运行: |运行: |运行: |运行: |运行: |运行: |运行: |运行: |运行: |运行: |运行: |运行: |运行: |运行: |运行: |运行: |运行: |运行: |运行: |运行: |运行: |运行: |运行: |运行: |运行: |运行: |运行: |运行: |运行: |运行: |运行: |
+          "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" installer.iss“C:\Program Files (x86)\Inno Setup 6\ISCC.exe” 安装程序.iss“C:\Program Files (x86)\Inno Setup 6\ISCC.exe” 安装程序.iss“C:\Program Files (x86)\Inno Setup 6\ISCC.exe” 安装程序.iss“C:\Program Files (x86)\Inno Setup 6\ISCC.exe” 安装程序.iss“C:\Program Files (x86)\Inno Setup 6\ISCC.exe” 安装程序.iss“C:\Program Files (x86)\Inno Setup 6\ISCC.exe” 安装程序.iss“C:\Program Files (x86)\Inno Setup 6\ISCC.exe” 安装程序.iss“C:\Program Files (x86)\Inno Setup 6\ISCC.exe” 安装程序.iss“C:\Program Files (x86)\Inno Setup 6\ISCC.exe” 安装程序.iss“C:\Program Files (x86)\Inno Setup 6\ISCC.exe” 安装程序.iss“C:\Program Files (x86)\Inno Setup 6\ISCC.exe” 安装程序.iss“C:\Program Files (x86)\Inno Setup 6\ISCC.exe” 安装程序.iss“C:\Program Files (x86)\Inno Setup 6\ISCC.exe” 安装程序.iss“C:\Program Files (x86)\Inno Setup 6\ISCC.exe” 安装程序.iss“C:\Program Files (x86)\Inno Setup 6\ISCC.exe” 安装程序.iss“C:\Program Files (x86)\Inno Setup 6\ISCC.exe” 安装程序.iss“C:\Program Files (x86)\Inno Setup 6\ISCC.exe” 安装程序.iss“C:\Program Files (x86)\Inno Setup 6\ISCC.exe” 安装程序.iss“C:\Program Files (x86)\Inno Setup 6\ISCC.exe” 安装程序.iss“C:\Program Files (x86)\Inno Setup 6\ISCC.exe” 安装程序.iss“C:\Program Files (x86)\Inno Setup 6\ISCC.exe” 安装程序.iss“C:\Program Files (x86)\Inno Setup 6\ISCC.exe” 安装程序.iss“C:\Program Files (x86)\Inno Setup 6\ISCC.exe” 安装程序.iss“C:\Program Files (x86)\Inno Setup 6\ISCC.exe” 安装程序.iss“C:\Program Files (x86)\Inno Setup 6\ISCC.exe” 安装程序.iss“C:\Program Files (x86)\Inno Setup 6\ISCC.exe” 安装程序.iss“C:\Program Files (x86)\Inno Setup 6\ISCC.exe” 安装程序.iss“C:\Program Files (x86)\Inno Setup 6\ISCC.exe” 安装程序.iss“C:\Program Files (x86)\Inno Setup 6\ISCC.exe” 安装程序.iss“C:\Program Files (x86)\Inno Setup 6\ISCC.exe” 安装程序.iss“C:\Program Files (x86)\Inno Setup 6\ISCC.exe” 安装程序.iss“C:\Program Files (x86)\Inno Setup 6\ISCC.exe” 安装程序.iss“C:\Program Files(x86)\Inno Setup 6\ISCC.exe” 安装程序.iss“C:\Program Files (x86)\Inno Setup 6\ISCC.exe” 安装程序.iss“C:\Program Files (x86)\Inno Setup 6\ISCC.exe” 安装程序.iss
+
+      - name: Upload Setup Artifact      - name: 上传设置工件 - 名称: 上传安装程序工件
+        uses: actions/upload-artifact@v4
+        with:
+          name: ClassroomApp-Setup名称: ClassroomApp-设置
+          path: installer_output/*.exe路径: installer_output/*.exe
